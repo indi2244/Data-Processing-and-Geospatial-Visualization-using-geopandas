@@ -38,10 +38,12 @@ class FarmData:
         farm_unit_group_by_account = account_farm_unit.groupby('account_id')
 
         for account_id, farm_unit_frame in farm_unit_group_by_account:
+            account_name = farm_unit_frame["account_name"].iloc[0]
+            key = f"{account_name} ({account_id})"
             parcels = [parcel for parcels in farm_unit_frame['parcels'] for parcel in parcels]
             farm_parcels = parcel_geometry_data[parcel_geometry_data['apn'].isin(parcels)]
 
-            data[account_id] = {
+            data[key] = {
                 "account_id" :farm_unit_frame["account_id"].iloc[0],
                 "account_name": farm_unit_frame["account_name"].iloc[0],
                 "mailing_address": ", ".join(
@@ -68,7 +70,7 @@ class FarmData:
 gsa_account_file = '/Users/indirakasichhwa/Desktop/RT-12/gsa.account.csv'
 farm_unit_file = '/Users/indirakasichhwa/Desktop/RT-12/2024_farm_unit_data_2024-01-01_2024-11-30.xlsx'
 parcel_geometries_file = '/Users/indirakasichhwa/Desktop/RT-12/gsa.parcel.csv'
-output_file = 'data3.json'
+output_file = 'all_data.json'
 
 data_processing = FarmData(gsa_account_file, farm_unit_file, parcel_geometries_file)
 gsa_account_data, farm_unit_data, parcel_geometry_data = data_processing.load_data()
