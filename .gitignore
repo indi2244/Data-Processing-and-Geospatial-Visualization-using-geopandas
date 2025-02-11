@@ -9,6 +9,7 @@
 /gsa.parcel (1).csv
 /gsa.parcel.csv
 /insights_look.pdf
-
+/column_data.json
+/all_data.json
 *.json
 *.csv
