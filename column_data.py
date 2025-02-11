@@ -45,11 +45,9 @@ class FarmData:
     account_farm_unit['parcels'] = account_farm_unit['parcels'].apply(lambda x: [i.strip() for i in x.strip("[]' ").replace("'", "").split(',')])
     account_farm_unit.replace([np.inf, -np.inf], 0, inplace=True)
 
-    farm_unit_data_with_remaining = farm_unit_data.copy()
-    farm_unit_data_with_remaining['remaining_%'] = account_farm_unit['remaining_%']
+    farm_unit_data_with_remaining = account_farm_unit[self.required_columns_farm_unit+['remaining_%']]
 
     column_properties = self.get_column_types(farm_unit_data_with_remaining)
-      
     data = {"column_properties": column_properties}
       
     farm_unit_group_by_account = account_farm_unit.groupby('account_id')
